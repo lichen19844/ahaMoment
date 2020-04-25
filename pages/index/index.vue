@@ -31,17 +31,18 @@
 			</view>
 			<!-- 聊天列表 -->
 			<view class="friends">
-				<view class="friend-list">
+				<view class="friend-list"  v-for="(item, index) of friends" :key="index">
 					<view class="friend-list-l">
-						<text class="tip">1</text>
-						<image src="../../static/images/img/five.png" mode=""></image>
+						<text class="tip">{{item.tip}}</text>
+						<image :src="item.imgurl" mode=""></image>
 					</view>
 					<view class="friend-list-r">
 						<view class="top">
-							<view class="name">椰椰酱</view>
-							<view class="time">11:59</view>
+							<view class="name">{{item.name}}</view>
+							<!-- <view class="time">{{item.time}}</view> -->
+							<view class="">12:12</view>
 						</view>
-						<view class="news">哥老关真好吃，我们什么时候再一起去吃呀？</view>
+						<view class="news">{{item.news}}</view>
 					</view>
 				</view>
 			</view>
@@ -50,12 +51,25 @@
 </template>
 
 <script>
+import datas from '../../commons/js/datas.js'
 export default {
 	data() {
-		return {};
+		return {
+			friends: []
+		};
 	},
-	onLoad() {},
-	methods: {}
+	onLoad() {
+		this.getFriends()
+	},
+	methods: {
+		getFriends: function () {
+			this.friends = datas.friends();
+			console.log(this.friends)
+			for (let i=0; i<this.friends.length; i++) {
+				this.friends[i].imgurl = '../../static/images/img/' + this.friends[i].imgurl;
+			}
+		}
+	}
 };
 </script>
 
@@ -119,23 +133,27 @@ export default {
 
 // 聊天列表
 .main {
-	padding: 88rpx $uni-spacing-col-base;
-	border: 1px solid red;
+	// width: 100%;
+	padding-top: 104rpx;
+	// border: 1px solid red;
 }
 .main .friend-list {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	width: 100%;
+	// width: 100%;
 	// height: 128rpx;
 	// line-height: 128rpx;
 	height: 96rpx;	// 技巧：和图片高度一样，再设置上下padding
-	padding: 16rpx 0;
-	border: 1px solid;
+	padding: 16rpx $uni-spacing-col-base;
+	// border: 1px solid;
+	&:active {
+		background-color: $uni-bg-color-hover;
+	}
 	.friend-list-l {
 		position: relative;
-		border: 1px solid;
+		// border: 1px solid;
 		.tip {
 			position: absolute;
 			z-index: 100;
@@ -160,7 +178,7 @@ export default {
 	}
 	.friend-list-r {
 		flex: 1;
-		border: 1px solid blue;
+		// border: 1px solid blue;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -168,7 +186,7 @@ export default {
 		padding-left: 32rpx;
 		width: 100%;
 		.top {
-			border: 1px solid;
+			// border: 1px solid;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
@@ -183,6 +201,7 @@ export default {
 				line-height: 50rpx;
 			}
 			.time {
+				display: none;
 				font-size: $uni-font-size-sm;
 				font-weight: 400;
 				color: $uni-text-color-disable;
@@ -191,7 +210,7 @@ export default {
 			}
 		}
 		.news {
-			border: 1px solid red;
+			// border: 1px solid red;
 			width: 100%;
 			font-size: $uni-font-size-base;
 			color: $uni-text-color-grey;
