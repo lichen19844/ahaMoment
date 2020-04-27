@@ -39,8 +39,8 @@
 					<view class="friend-list-r">
 						<view class="top">
 							<view class="name">{{item.name}}</view>
-							<!-- <view class="time">{{item.time}}</view> -->
-							<view class="">12:12</view>
+							<view class="time">{{changeTime(item.time)}}</view>
+							<!-- <view class="">12:12</view> -->
 						</view>
 						<view class="news">{{item.news}}</view>
 					</view>
@@ -52,6 +52,7 @@
 
 <script>
 import datas from '../../commons/js/datas.js'
+import myfun from '../../commons/js/myfun.js'
 export default {
 	data() {
 		return {
@@ -62,6 +63,9 @@ export default {
 		this.getFriends()
 	},
 	methods: {
+		changeTime: function (date) {
+			return myfun.dateTime(date)
+		},
 		getFriends: function () {
 			this.friends = datas.friends();
 			console.log(this.friends)
@@ -201,7 +205,7 @@ export default {
 				line-height: 50rpx;
 			}
 			.time {
-				display: none;
+				// display: none;
 				font-size: $uni-font-size-sm;
 				font-weight: 400;
 				color: $uni-text-color-disable;
